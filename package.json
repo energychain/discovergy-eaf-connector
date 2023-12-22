@@ -1,0 +1,37 @@
+{
+  "name": "discovergy-eaf-connector",
+  "version": "0.9.2",
+  "description": "Command Line tool to feed readings of Discovergy meters to utility for processing in dynamic tariffs.",
+  "main": "cli.js",
+  "bin": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/discovergy-eaf-connector.git"
+  },
+  "keywords": [
+    "discovergy",
+    "tariffs",
+    "electricity",
+    "stromdao",
+    "eaf",
+    "energy",
+    "application",
+    "framework",
+    "dynamic",
+    "tariffs"
+  ],
+  "author": "STROMDAO GmbH <dev@stromdao.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/energychain/discovergy-eaf-connector/issues"
+  },
+  "homepage": "https://github.com/energychain/discovergy-eaf-connector#readme",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "eaf-amr-client": "^0.2.4"
+  }
+}
