@@ -3,6 +3,7 @@
 const axios = require("axios");
 const EAC = require("eaf-amr-client");
 require('dotenv').config();
+let clientMeta = {};
 
 const fetchMeters = async function() {
     let responds = await axios.get("https://api.discovergy.com/public/v1/meters",{
@@ -17,7 +18,8 @@ const fetchMeters = async function() {
             meterId: responds.data[i].meterId,
             fullSerialNumber: responds.data[i].fullSerialNumber,
             administrationNumber: responds.data[i].administrationNumber
-        })
+        })     
+        clientMeta[responds.data[i].fullSerialNumber] = responds.data[i];
     }
     return meters;
 }
@@ -55,6 +57,13 @@ const app = async function() {
                 readingToken:process.env.EAF_CONCENTRATOR_TOKEN
             });
             const result = await instance.updateReading(eafReading.reading, eafReading.time);
+
+            if(typeof process.env.UPDATE_META !== 'undefined') {
+                if(typeof clientMeta[meter.fullSerialNumber] !== 'undefined') {
+                    clientMeta[meter.fullSerialNumber].meterId = meter.fullSerialNumber;
+                    console.log(await instance.updateAssetdata(clientMeta[meter.fullSerialNumber]));
+                }
+            }
             /*
             if(typeof instance.config.readingToken !== process.env.EAF_CONCENTRATOR_TOKEN) {
                 throw new Error('Update of EAF_CONCENTRATOR_TOKEN required');
