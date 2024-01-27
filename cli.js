@@ -85,7 +85,12 @@ const app = async function() {
         await updateEAF(discovegyReading,"energyOut");
         await updateEAF(discovegyReading,"1.8.0");
         await updateEAF(discovegyReading,"2.8.0");
-        
+        await updateEAF(discovegyReading,"energy0");
+        await updateEAF(discovegyReading,"energy1");
+        await updateEAF(discovegyReading,"energy2");
+        await updateEAF(discovegyReading,"energy3");
+        await updateEAF(discovegyReading,"energy4");
+
     } 
 }
 
