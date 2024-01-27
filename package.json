@@ -1,6 +1,6 @@
 {
   "name": "discovergy-eaf-connector",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Command Line tool to feed readings of Discovergy meters to utility for processing in dynamic tariffs.",
   "main": "cli.js",
   "bin": "cli.js",

@@ -47,6 +47,8 @@ const app = async function() {
             let meter_identifier = meter_sub;
             if(meter_identifier == "energy") {
                 meter_identifier = ""
+            } else {
+                meter_identifier = "_" + meter_identifier;
             }
             if(typeof discovegyReading.values[meter_sub] !== 'undefined') {
                 if(!isNaN(discovegyReading.values[meter_sub])) {
@@ -73,11 +75,6 @@ const app = async function() {
                         console.log(await instance.updateAssetdata(clientMeta[meter.fullSerialNumber]));
                     }
                 }   
-                /*
-                if(typeof instance.config.readingToken !== process.env.EAF_CONCENTRATOR_TOKEN) {
-                    throw new Error('Update of EAF_CONCENTRATOR_TOKEN required');
-                }
-                */
             }
         }
         let reading = -1;
