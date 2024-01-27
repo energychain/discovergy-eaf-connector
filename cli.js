@@ -40,36 +40,52 @@ const app = async function() {
     // Iterate meters and push it to metering endpoint of utilities EAF instance
     for (const meter of meters) {
         const discovegyReading = await rerieveReading(meter);
-        let reading = -1;
-        if(typeof discovegyReading.values.energy !== 'undefined') {
-            if(!isNaN(discovegyReading.values.energy)) {
-                reading = discovegyReading.values.energy;
+        const updateEAF = async function(discovegyReading,meter_sub) {
+            if(( typeof meter_sub==='undefined') || (meter_sub == null)) {
+                meter_sub = "energy";
             }
-        }
-        if(reading > 0) {
-            let eafReading = {
-                time: discovegyReading.time,
-                reading: Math.round(reading/10000000)
+            let meter_identifier = meter_sub;
+            if(meter_identifier == "energy") {
+                meter_identifier = ""
             }
-            const instance = new EAC({
-                meterId:meter.fullSerialNumber,
-                baseUrl:process.env.EAF_BASEURL,
-                readingToken:process.env.EAF_CONCENTRATOR_TOKEN
-            });
-            const result = await instance.updateReading(eafReading.reading, eafReading.time);
-
-            if(typeof process.env.UPDATE_META !== 'undefined') {
-                if(typeof clientMeta[meter.fullSerialNumber] !== 'undefined') {
-                    clientMeta[meter.fullSerialNumber].meterId = meter.fullSerialNumber;
-                    console.log(await instance.updateAssetdata(clientMeta[meter.fullSerialNumber]));
+            if(typeof discovegyReading.values[meter_sub] !== 'undefined') {
+                if(!isNaN(discovegyReading.values[meter_sub])) {
+                    reading = discovegyReading.values[meter_sub];
                 }
             }
-            /*
-            if(typeof instance.config.readingToken !== process.env.EAF_CONCENTRATOR_TOKEN) {
-                throw new Error('Update of EAF_CONCENTRATOR_TOKEN required');
+        
+            
+            if(reading > 0) {
+                let eafReading = {
+                    time: discovegyReading.time,
+                    reading: Math.round(reading/10000000)
+                }
+                const instance = new EAC({
+                    meterId:meter.fullSerialNumber + meter_identifier,
+                    baseUrl:process.env.EAF_BASEURL,
+                    readingToken:process.env.EAF_CONCENTRATOR_TOKEN
+                });
+                const result = await instance.updateReading(eafReading.reading, eafReading.time);
+
+                if(typeof process.env.UPDATE_META !== 'undefined') {
+                    if(typeof clientMeta[meter.fullSerialNumber] !== 'undefined') {
+                        clientMeta[meter.fullSerialNumber].meterId = meter.fullSerialNumber + meter_identifier;
+                        console.log(await instance.updateAssetdata(clientMeta[meter.fullSerialNumber]));
+                    }
+                }   
+                /*
+                if(typeof instance.config.readingToken !== process.env.EAF_CONCENTRATOR_TOKEN) {
+                    throw new Error('Update of EAF_CONCENTRATOR_TOKEN required');
+                }
+                */
             }
-            */
         }
+        let reading = -1;
+        await updateEAF(discovegyReading,"energy");
+        await updateEAF(discovegyReading,"energyOut");
+        await updateEAF(discovegyReading,"1.8.0");
+        await updateEAF(discovegyReading,"2.8.0");
+        
     } 
 }
 

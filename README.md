@@ -1,5 +1,5 @@
 # discovergy-eaf-connector
-**Automated Meter Reading client for Discovergy Meters to [STROMDAO Energy Application Framework](https://github.com/energychain/STROMDAO_EAFs) based dynamic electricity tariffs.**
+**Automated Meter Reading client for Discovergy Meters to [STROMDAO Energy Application Framework](https://energy.js.org/) based dynamic electricity tariffs.**
 
 [![Downloads](https://img.shields.io/npm/dt/discovergy-eaf-connector.svg)](https://www.npmjs.com/package/discovergy-eaf-connector)
 [![License](https://img.shields.io/npm/l/discovergy-eaf-connector.svg)](https://github.com/energychain/discovergy-eaf-connector/blob/master/LICENSE)
